@@ -1,13 +1,6 @@
 // @flow
 import React from "react"
-import {
-  Form,
-  Input,
-  DatePicker as BrowserDatePicker,
-  Button,
-  Tooltip,
-  Icon,
-} from "antd"
+import { Form, Input, Button, Tooltip, Icon } from "antd"
 
 const formItemLayout = {
   labelCol: {
@@ -32,68 +25,114 @@ const tailFormItemLayout = {
   },
 }
 
-export type ParticipantFormData = {
+type CourseData = {
+  name: string,
+}
+
+export type ParticipantData = {
   firstName: string,
   lastName: string,
-  dateOfBirth: Date,
-  email: string,
+  street: string,
+  houseNumber: string,
+  postalCode: string,
+  city: string,
+  course: CourseData,
 }
 
 type Props = {
-  onSubmit: ParticipantFormData => void,
+  onUpdate: ParticipantData => void,
+  loading: boolean,
+  participantData: ParticipantData,
 }
 
 export default (props: Props) => {
-  const [firstName, setFirstName] = React.useState("")
-  const [lastName, setLastName] = React.useState("")
-  const [dateOfBirth, setDateOfBirth] = React.useState(new Date())
-  const [email, setEmail] = React.useState("")
+  const [participantData, setParticipantData] = React.useState(
+    props.participantData
+  )
 
-  const handleSubmit = e => {
-    props.onSubmit({
-      firstName: firstName,
-      lastName: lastName,
-      dateOfBirth: dateOfBirth,
-      email: email,
-    })
+  const handleUpdate = e => {
+    // TODO Validate form data
+    props.onUpdate(participantData)
     e.preventDefault()
   }
 
   return (
-    <Form onSubmit={handleSubmit} {...formItemLayout}>
+    <Form onSubmit={handleUpdate} {...formItemLayout}>
       <Form.Item label="Vorname" required={true}>
-        <Input value={firstName} onChange={e => setFirstName(e.target.value)} />
-      </Form.Item>
-      <Form.Item label="Nachname" required={true}>
-        <Input value={lastName} onChange={e => setLastName(e.target.value)} />
-      </Form.Item>
-      <Form.Item label="Geburtsdatum" required={true}>
-        <BrowserDatePicker
-          onChange={(date, datestring) => setDateOfBirth(new Date(datestring))}
-          format="DD.MM.YYYY"
-          placeholder="Geburtsdatum wählen"
+        <Input
+          disabled={props.loading}
+          value={participantData.firstName}
+          onChange={e =>
+            setParticipantData({
+              ...participantData,
+              firstName: e.target.value,
+            })
+          }
         />
       </Form.Item>
-      <Form.Item
-        label={
-          <span>
-            E-Mail-Adresse&nbsp;
-            <Tooltip title="An diese Adresse schicken wir eine Bestätigungs-E-Mail mit der du deine Angaben später auch ändern kannst. Die Email-Adresse selbst wird nicht gespeichert.">
-              <Icon type="question-circle-o" />
-            </Tooltip>
-          </span>
-        }
-        required={true}
-      >
+      <Form.Item label="Nachname" required={true}>
         <Input
-          type="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
+          disabled={props.loading}
+          value={participantData.lastName}
+          onChange={e =>
+            setParticipantData({
+              ...participantData,
+              lastName: e.target.value,
+            })
+          }
+        />
+      </Form.Item>
+      <Form.Item label="Straße">
+        <Input
+          disabled={props.loading}
+          value={participantData.street}
+          onChange={e =>
+            setParticipantData({
+              ...participantData,
+              street: e.target.value,
+            })
+          }
+        />
+      </Form.Item>
+      <Form.Item label="Hausnummer">
+        <Input
+          disabled={props.loading}
+          value={participantData.houseNumber}
+          onChange={e =>
+            setParticipantData({
+              ...participantData,
+              houseNumber: e.target.value,
+            })
+          }
+        />
+      </Form.Item>
+      <Form.Item label="Postleitzahl">
+        <Input
+          disabled={props.loading}
+          value={participantData.postalCode}
+          onChange={e =>
+            setParticipantData({
+              ...participantData,
+              postalCode: e.target.value,
+            })
+          }
+        />
+      </Form.Item>
+      <Form.Item label="Stadt">
+        <Input
+          disabled={props.loading}
+          value={participantData.city}
+          onChange={e =>
+            setParticipantData({
+              ...participantData,
+              city: e.target.value,
+            })
+          }
         />
       </Form.Item>
       <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
-          Registrieren
+        <Button loading={props.loading} type="primary" htmlType="submit">
+          Speichern
         </Button>
       </Form.Item>
     </Form>
