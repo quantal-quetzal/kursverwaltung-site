@@ -5,7 +5,7 @@ import Layout from "../components/Layout"
 import type { ParticipantData } from "../components/ParticipantForm"
 import { gql } from "apollo-boost"
 import { useQuery } from "@apollo/react-hooks"
-import database from "../components/Database"
+import database from "./ApolloClient"
 import { message, Modal, Spin } from "antd"
 
 const renderWithLayout = (children: React.Node): React.Node => {
@@ -96,7 +96,7 @@ export default (props: Props) => {
         data.findParticipantByID.course._id,
         setSaving
       )}
-      loading={loading}
+      loading={false}
       participantData={data.findParticipantByID}
     />
   )

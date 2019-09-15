@@ -1,0 +1,610 @@
+directive @embedded on OBJECT
+directive @collection(name: String!) on OBJECT
+directive @index(name: String!) on FIELD
+directive @resolver(name: String, paginated: Boolean! = false) on FIELD
+directive @relation(name: String) on FIELD
+directive @unique(index: String) on FIELD
+type Course {
+  city: String
+  name: String!
+  description: String
+  # The document's ID.
+  _id: ID!
+  participants(
+    # The number of items to return per page.
+    _size: Int
+    # The pagination cursor.
+    _cursor: String
+  ): ParticipantPage!
+  currentPhase: Phase!
+  instructor: Instructor
+  template: Template!
+  end: Date
+  start: Date
+  # The document's timestamp.
+  _ts: Long!
+}
+
+# 'Course' input values
+input CourseInput {
+  name: String!
+  description: String
+  start: Date
+  end: Date
+  city: String
+  currentPhase: Phase!
+  instructor: CourseInstructorRelation
+  template: CourseTemplateRelation
+  participants: CourseParticipantsRelation
+}
+
+# Allow manipulating the relationship between the types 'Course' and 'Instructor' using the field 'Course.instructor'.
+input CourseInstructorRelation {
+  # Create a document of type 'Instructor' and associate it with the current document.
+  create: InstructorInput
+  # Connect a document of type 'Instructor' with the current document using its ID.
+  connect: ID
+  # If true, disconnects this document from 'Instructor'
+  disconnect: Boolean
+}
+
+# The pagination object for elements of type 'Course'.
+type CoursePage {
+  # The elements of type 'Course' in this page.
+  data: [Course]!
+  # A cursor for elements coming after the current page.
+  after: String
+  # A cursor for elements coming before the current page.
+  before: String
+}
+
+# Allow manipulating the relationship between the types 'Course' and 'Participant'.
+input CourseParticipantsRelation {
+  # Create one or more documents of type 'Participant' and associate them with the current document.
+  create: [ParticipantInput]
+  # Connect one or more documents of type 'Participant' with the current document using their IDs.
+  connect: [ID]
+  # Disconnect the given documents of type 'Participant' from the current document using their IDs.
+  disconnect: [ID]
+}
+
+# Allow manipulating the relationship between the types 'Course' and 'Template' using the field 'Course.template'.
+input CourseTemplateRelation {
+  # Create a document of type 'Template' and associate it with the current document.
+  create: TemplateInput
+  # Connect a document of type 'Template' with the current document using its ID.
+  connect: ID
+}
+
+scalar Date
+
+type Instructor {
+  # The document's ID.
+  _id: ID!
+  registrationNumber: String
+  courses(
+    # The number of items to return per page.
+    _size: Int
+    # The pagination cursor.
+    _cursor: String
+  ): CoursePage!
+  lastName: String
+  firstName: String
+  # The document's timestamp.
+  _ts: Long!
+}
+
+# Allow manipulating the relationship between the types 'Instructor' and 'Course'.
+input InstructorCoursesRelation {
+  # Create one or more documents of type 'Course' and associate them with the current document.
+  create: [CourseInput]
+  # Connect one or more documents of type 'Course' with the current document using their IDs.
+  connect: [ID]
+  # Disconnect the given documents of type 'Course' from the current document using their IDs.
+  disconnect: [ID]
+}
+
+# 'Instructor' input values
+input InstructorInput {
+  firstName: String
+  lastName: String
+  registrationNumber: String
+  courses: InstructorCoursesRelation
+}
+
+# The `Long` scalar type represents non-fractional signed whole numeric values.
+# Long can represent values between -(2^63) and 2^63 - 1.
+scalar Long
+
+type Mutation {
+  # Create a new document in the collection of 'Prerequisite'
+  createPrerequisite(
+    # 'Prerequisite' input values
+    data: PrerequisiteInput!
+  ): Prerequisite!
+  # Update an existing document in the collection of 'PrerequisiteFulfillment'
+  updatePrerequisiteFulfillment(
+    # The 'PrerequisiteFulfillment' document's ID
+    id: ID!
+    # 'PrerequisiteFulfillment' input values
+    data: PrerequisiteFulfillmentInput!
+  ): PrerequisiteFulfillment
+  # Delete an existing document in the collection of 'PrerequisiteFulfillment'
+  deletePrerequisiteFulfillment(
+    # The 'PrerequisiteFulfillment' document's ID
+    id: ID!
+  ): PrerequisiteFulfillment
+  # Delete an existing document in the collection of 'TestResult'
+  deleteTestResult(
+    # The 'TestResult' document's ID
+    id: ID!
+  ): TestResult
+  # Update an existing document in the collection of 'TestResult'
+  updateTestResult(
+    # The 'TestResult' document's ID
+    id: ID!
+    # 'TestResult' input values
+    data: TestResultInput!
+  ): TestResult
+  # Create a new document in the collection of 'Instructor'
+  createInstructor(
+    # 'Instructor' input values
+    data: InstructorInput!
+  ): Instructor!
+  # Delete an existing document in the collection of 'Prerequisite'
+  deletePrerequisite(
+    # The 'Prerequisite' document's ID
+    id: ID!
+  ): Prerequisite
+  # Delete an existing document in the collection of 'Template'
+  deleteTemplate(
+    # The 'Template' document's ID
+    id: ID!
+  ): Template
+  # Update an existing document in the collection of 'Course'
+  updateCourse(
+    # The 'Course' document's ID
+    id: ID!
+    # 'Course' input values
+    data: CourseInput!
+  ): Course
+  # Create a new document in the collection of 'Course'
+  createCourse(
+    # 'Course' input values
+    data: CourseInput!
+  ): Course!
+  # Create a new document in the collection of 'Template'
+  createTemplate(
+    # 'Template' input values
+    data: TemplateInput!
+  ): Template!
+  # Delete an existing document in the collection of 'Test'
+  deleteTest(
+    # The 'Test' document's ID
+    id: ID!
+  ): Test
+  # Update an existing document in the collection of 'Test'
+  updateTest(
+    # The 'Test' document's ID
+    id: ID!
+    # 'Test' input values
+    data: TestInput!
+  ): Test
+  # Create a new document in the collection of 'PrerequisiteFulfillment'
+  createPrerequisiteFulfillment(
+    # 'PrerequisiteFulfillment' input values
+    data: PrerequisiteFulfillmentInput!
+  ): PrerequisiteFulfillment!
+  # Update an existing document in the collection of 'Template'
+  updateTemplate(
+    # The 'Template' document's ID
+    id: ID!
+    # 'Template' input values
+    data: TemplateInput!
+  ): Template
+  # Create a new document in the collection of 'TestResult'
+  createTestResult(
+    # 'TestResult' input values
+    data: TestResultInput!
+  ): TestResult!
+  # Delete an existing document in the collection of 'Course'
+  deleteCourse(
+    # The 'Course' document's ID
+    id: ID!
+  ): Course
+  # Delete an existing document in the collection of 'Instructor'
+  deleteInstructor(
+    # The 'Instructor' document's ID
+    id: ID!
+  ): Instructor
+  # Delete an existing document in the collection of 'Participant'
+  deleteParticipant(
+    # The 'Participant' document's ID
+    id: ID!
+  ): Participant
+  # Update an existing document in the collection of 'Prerequisite'
+  updatePrerequisite(
+    # The 'Prerequisite' document's ID
+    id: ID!
+    # 'Prerequisite' input values
+    data: PrerequisiteInput!
+  ): Prerequisite
+  # Update an existing document in the collection of 'Instructor'
+  updateInstructor(
+    # The 'Instructor' document's ID
+    id: ID!
+    # 'Instructor' input values
+    data: InstructorInput!
+  ): Instructor
+  # Create a new document in the collection of 'Participant'
+  createParticipant(
+    # 'Participant' input values
+    data: ParticipantInput!
+  ): Participant!
+  # Create a new document in the collection of 'Test'
+  createTest(
+    # 'Test' input values
+    data: TestInput!
+  ): Test!
+  # Update an existing document in the collection of 'Participant'
+  updateParticipant(
+    # The 'Participant' document's ID
+    id: ID!
+    # 'Participant' input values
+    data: ParticipantInput!
+  ): Participant
+}
+
+type Participant {
+  houseNumber: String
+  city: String
+  course: Course!
+  prerequisiteFulfillments(
+    # The number of items to return per page.
+    _size: Int
+    # The pagination cursor.
+    _cursor: String
+  ): PrerequisiteFulfillmentPage!
+  # The document's ID.
+  _id: ID!
+  registrationNumber: String
+  coursePassed: Boolean
+  dateOfBirth: Date
+  postalCode: String
+  lastName: String!
+  firstName: String!
+  testResults(
+    # The number of items to return per page.
+    _size: Int
+    # The pagination cursor.
+    _cursor: String
+  ): TestResultPage!
+  street: String
+  # The document's timestamp.
+  _ts: Long!
+}
+
+# Allow manipulating the relationship between the types 'Participant' and 'Course' using the field 'Participant.course'.
+input ParticipantCourseRelation {
+  # Create a document of type 'Course' and associate it with the current document.
+  create: CourseInput
+  # Connect a document of type 'Course' with the current document using its ID.
+  connect: ID
+}
+
+# 'Participant' input values
+input ParticipantInput {
+  firstName: String!
+  lastName: String!
+  dateOfBirth: Date
+  street: String
+  houseNumber: String
+  postalCode: String
+  city: String
+  prerequisiteFulfillments: ParticipantPrerequisiteFulfillmentsRelation
+  testResults: ParticipantTestResultsRelation
+  course: ParticipantCourseRelation
+  coursePassed: Boolean
+  registrationNumber: String
+}
+
+# The pagination object for elements of type 'Participant'.
+type ParticipantPage {
+  # The elements of type 'Participant' in this page.
+  data: [Participant]!
+  # A cursor for elements coming after the current page.
+  after: String
+  # A cursor for elements coming before the current page.
+  before: String
+}
+
+# Allow manipulating the relationship between the types 'Participant' and 'PrerequisiteFulfillment'.
+input ParticipantPrerequisiteFulfillmentsRelation {
+  # Create one or more documents of type 'PrerequisiteFulfillment' and associate them with the current document.
+  create: [PrerequisiteFulfillmentInput]
+  # Connect one or more documents of type 'PrerequisiteFulfillment' with the current document using their IDs.
+  connect: [ID]
+  # Disconnect the given documents of type 'PrerequisiteFulfillment' from the current document using their IDs.
+  disconnect: [ID]
+}
+
+# Allow manipulating the relationship between the types 'Participant' and 'TestResult'.
+input ParticipantTestResultsRelation {
+  # Create one or more documents of type 'TestResult' and associate them with the current document.
+  create: [TestResultInput]
+  # Connect one or more documents of type 'TestResult' with the current document using their IDs.
+  connect: [ID]
+  # Disconnect the given documents of type 'TestResult' from the current document using their IDs.
+  disconnect: [ID]
+}
+
+enum Phase {
+  OPEN
+  STARTED
+  FINISHED
+}
+
+type Prerequisite {
+  name: String!
+  description: String
+  # The document's ID.
+  _id: ID!
+  template: Template!
+  requiresDocumentScan: Boolean!
+  # The document's timestamp.
+  _ts: Long!
+}
+
+type PrerequisiteFulfillment {
+  participant: Participant!
+  documentScan: String
+  prerequisite: Prerequisite!
+  # The document's ID.
+  _id: ID!
+  fulfilledDate: Date
+  # The document's timestamp.
+  _ts: Long!
+}
+
+# 'PrerequisiteFulfillment' input values
+input PrerequisiteFulfillmentInput {
+  prerequisite: PrerequisiteFulfillmentPrerequisiteRelation
+  participant: PrerequisiteFulfillmentParticipantRelation
+  fulfilledDate: Date
+  documentScan: String
+}
+
+# The pagination object for elements of type 'PrerequisiteFulfillment'.
+type PrerequisiteFulfillmentPage {
+  # The elements of type 'PrerequisiteFulfillment' in this page.
+  data: [PrerequisiteFulfillment]!
+  # A cursor for elements coming after the current page.
+  after: String
+  # A cursor for elements coming before the current page.
+  before: String
+}
+
+# Allow manipulating the relationship between the types 'PrerequisiteFulfillment'
+# and 'Participant' using the field 'PrerequisiteFulfillment.participant'.
+input PrerequisiteFulfillmentParticipantRelation {
+  # Create a document of type 'Participant' and associate it with the current document.
+  create: ParticipantInput
+  # Connect a document of type 'Participant' with the current document using its ID.
+  connect: ID
+}
+
+# Allow manipulating the relationship between the types 'PrerequisiteFulfillment'
+# and 'Prerequisite' using the field 'PrerequisiteFulfillment.prerequisite'.
+input PrerequisiteFulfillmentPrerequisiteRelation {
+  # Create a document of type 'Prerequisite' and associate it with the current document.
+  create: PrerequisiteInput
+  # Connect a document of type 'Prerequisite' with the current document using its ID.
+  connect: ID
+}
+
+# 'Prerequisite' input values
+input PrerequisiteInput {
+  template: PrerequisiteTemplateRelation
+  name: String!
+  description: String
+  requiresDocumentScan: Boolean!
+}
+
+# The pagination object for elements of type 'Prerequisite'.
+type PrerequisitePage {
+  # The elements of type 'Prerequisite' in this page.
+  data: [Prerequisite]!
+  # A cursor for elements coming after the current page.
+  after: String
+  # A cursor for elements coming before the current page.
+  before: String
+}
+
+# Allow manipulating the relationship between the types 'Prerequisite' and 'Template' using the field 'Prerequisite.template'.
+input PrerequisiteTemplateRelation {
+  # Create a document of type 'Template' and associate it with the current document.
+  create: TemplateInput
+  # Connect a document of type 'Template' with the current document using its ID.
+  connect: ID
+}
+
+type Query {
+  # Find a document from the collection of 'Instructor' by its id.
+  findInstructorByID(
+    # The 'Instructor' document's ID
+    id: ID!
+  ): Instructor
+  # Find a document from the collection of 'TestResult' by its id.
+  findTestResultByID(
+    # The 'TestResult' document's ID
+    id: ID!
+  ): TestResult
+  # Find a document from the collection of 'Participant' by its id.
+  findParticipantByID(
+    # The 'Participant' document's ID
+    id: ID!
+  ): Participant
+  # Find a document from the collection of 'PrerequisiteFulfillment' by its id.
+  findPrerequisiteFulfillmentByID(
+    # The 'PrerequisiteFulfillment' document's ID
+    id: ID!
+  ): PrerequisiteFulfillment
+  # Find a document from the collection of 'Course' by its id.
+  findCourseByID(
+    # The 'Course' document's ID
+    id: ID!
+  ): Course
+  # Find a document from the collection of 'Prerequisite' by its id.
+  findPrerequisiteByID(
+    # The 'Prerequisite' document's ID
+    id: ID!
+  ): Prerequisite
+  # Find a document from the collection of 'Template' by its id.
+  findTemplateByID(
+    # The 'Template' document's ID
+    id: ID!
+  ): Template
+  allCourses(filter: QueryFilter): [Course!]!
+  # Find a document from the collection of 'Test' by its id.
+  findTestByID(
+    # The 'Test' document's ID
+    id: ID!
+  ): Test
+}
+
+input QueryFilter {
+  currentPhase: Phase
+}
+
+type Template {
+  name: String!
+  # The document's ID.
+  _id: ID!
+  tests(
+    # The number of items to return per page.
+    _size: Int
+    # The pagination cursor.
+    _cursor: String
+  ): TestPage!
+  prerequisites(
+    # The number of items to return per page.
+    _size: Int
+    # The pagination cursor.
+    _cursor: String
+  ): PrerequisitePage!
+  # The document's timestamp.
+  _ts: Long!
+}
+
+# 'Template' input values
+input TemplateInput {
+  name: String!
+  prerequisites: TemplatePrerequisitesRelation
+  tests: TemplateTestsRelation
+}
+
+# Allow manipulating the relationship between the types 'Template' and 'Prerequisite'.
+input TemplatePrerequisitesRelation {
+  # Create one or more documents of type 'Prerequisite' and associate them with the current document.
+  create: [PrerequisiteInput]
+  # Connect one or more documents of type 'Prerequisite' with the current document using their IDs.
+  connect: [ID]
+  # Disconnect the given documents of type 'Prerequisite' from the current document using their IDs.
+  disconnect: [ID]
+}
+
+# Allow manipulating the relationship between the types 'Template' and 'Test'.
+input TemplateTestsRelation {
+  # Create one or more documents of type 'Test' and associate them with the current document.
+  create: [TestInput]
+  # Connect one or more documents of type 'Test' with the current document using their IDs.
+  connect: [ID]
+  # Disconnect the given documents of type 'Test' from the current document using their IDs.
+  disconnect: [ID]
+}
+
+type Test {
+  name: String!
+  description: String
+  # The document's ID.
+  _id: ID!
+  template: Template!
+  requiresDocumentScan: Boolean!
+  # The document's timestamp.
+  _ts: Long!
+}
+
+# 'Test' input values
+input TestInput {
+  template: TestTemplateRelation
+  name: String!
+  description: String
+  requiresDocumentScan: Boolean!
+}
+
+# The pagination object for elements of type 'Test'.
+type TestPage {
+  # The elements of type 'Test' in this page.
+  data: [Test]!
+  # A cursor for elements coming after the current page.
+  after: String
+  # A cursor for elements coming before the current page.
+  before: String
+}
+
+type TestResult {
+  participant: Participant!
+  documentScan: String
+  test: Test!
+  # The document's ID.
+  _id: ID!
+  passedDate: Date
+  # The document's timestamp.
+  _ts: Long!
+}
+
+# 'TestResult' input values
+input TestResultInput {
+  test: TestResultTestRelation
+  participant: TestResultParticipantRelation
+  passedDate: Date
+  documentScan: String
+}
+
+# The pagination object for elements of type 'TestResult'.
+type TestResultPage {
+  # The elements of type 'TestResult' in this page.
+  data: [TestResult]!
+  # A cursor for elements coming after the current page.
+  after: String
+  # A cursor for elements coming before the current page.
+  before: String
+}
+
+# Allow manipulating the relationship between the types 'TestResult' and
+# 'Participant' using the field 'TestResult.participant'.
+input TestResultParticipantRelation {
+  # Create a document of type 'Participant' and associate it with the current document.
+  create: ParticipantInput
+  # Connect a document of type 'Participant' with the current document using its ID.
+  connect: ID
+}
+
+# Allow manipulating the relationship between the types 'TestResult' and 'Test' using the field 'TestResult.test'.
+input TestResultTestRelation {
+  # Create a document of type 'Test' and associate it with the current document.
+  create: TestInput
+  # Connect a document of type 'Test' with the current document using its ID.
+  connect: ID
+}
+
+# Allow manipulating the relationship between the types 'Test' and 'Template' using the field 'Test.template'.
+input TestTemplateRelation {
+  # Create a document of type 'Template' and associate it with the current document.
+  create: TemplateInput
+  # Connect a document of type 'Template' with the current document using its ID.
+  connect: ID
+}
+
+scalar Time
+

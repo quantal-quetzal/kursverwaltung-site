@@ -4,7 +4,7 @@ import { Router } from "@reach/router"
 import Layout from "../components/Layout"
 import Courses from "../components/Courses"
 import { gql } from "apollo-boost"
-import database from "../components/Database"
+import apolloClient from "../components/ApolloClient"
 import { useQuery } from "@apollo/react-hooks"
 import { message, Modal, Spin, Card, Icon } from "antd"
 import { Link } from "gatsby"
@@ -29,7 +29,7 @@ export default () => {
       }
     `,
     {
-      client: database,
+      client: apolloClient,
     }
   )
 

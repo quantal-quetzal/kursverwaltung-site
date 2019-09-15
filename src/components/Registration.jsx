@@ -4,7 +4,7 @@ import RegistrationForm from "../components/RegistrationForm"
 import type { RegistrationData } from "../components/RegistrationForm"
 import { gql } from "apollo-boost"
 import { useQuery } from "@apollo/react-hooks"
-import database from "../components/Database"
+import apolloClient from "../components/ApolloClient"
 import { message, Modal } from "antd"
 import { navigate } from "gatsby"
 import Layout from "../components/Layout"
@@ -35,7 +35,7 @@ export default (props: Props) => {
       okText: "Ja, jetzt registrieren",
       cancelText: "Nein",
       onOk: () => {
-        database
+        apolloClient
           .mutate({
             mutation: gql`
           mutation registration {
