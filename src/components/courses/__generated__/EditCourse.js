@@ -3,69 +3,53 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: NewTemplate
+// GraphQL mutation operation: EditCourse
 // ====================================================
 
-export type NewTemplate_createTemplate_prerequisites_data = {
-  __typename: "Prerequisite",
-  /**
-   * The document's ID.
-   */
-  _id: string,
-  name: string,
-  description: ?string,
-  requiresDocumentScan: boolean,
+export type EditCourse_updateCourse_instructor = {
+  __typename: "Instructor",
+  firstName: ?string,
+  lastName: ?string,
 };
 
-export type NewTemplate_createTemplate_prerequisites = {
-  __typename: "PrerequisitePage",
-  /**
-   * The elements of type 'Prerequisite' in this page.
-   */
-  data: Array<?NewTemplate_createTemplate_prerequisites_data>,
-};
-
-export type NewTemplate_createTemplate_tests_data = {
-  __typename: "Test",
-  /**
-   * The document's ID.
-   */
-  _id: string,
-  name: string,
-  description: ?string,
-  requiresDocumentScan: boolean,
-};
-
-export type NewTemplate_createTemplate_tests = {
-  __typename: "TestPage",
-  /**
-   * The elements of type 'Test' in this page.
-   */
-  data: Array<?NewTemplate_createTemplate_tests_data>,
-};
-
-export type NewTemplate_createTemplate = {
+export type EditCourse_updateCourse_template = {
   __typename: "Template",
+  name: string,
+};
+
+export type EditCourse_updateCourse = {
+  __typename: "Course",
   /**
    * The document's ID.
    */
   _id: string,
   name: string,
-  prerequisites: NewTemplate_createTemplate_prerequisites,
-  tests: NewTemplate_createTemplate_tests,
+  description: ?string,
+  start: ?any,
+  end: ?any,
+  city: ?string,
+  currentPhase: Phase,
+  instructor: ?EditCourse_updateCourse_instructor,
+  template: EditCourse_updateCourse_template,
 };
 
-export type NewTemplate = {
+export type EditCourse = {
   /**
-   * Create a new document in the collection of 'Template'
+   * Update an existing document in the collection of 'Course'
    */
-  createTemplate: NewTemplate_createTemplate
+  updateCourse: ?EditCourse_updateCourse
 };
 
-export type NewTemplateVariables = {
+export type EditCourseVariables = {
+  id: string,
   name: string,
-  prerequisites: Array<PrerequisiteInput>,
-  tests: Array<TestInput>,
+  description?: ?string,
+  start?: ?any,
+  end?: ?any,
+  city?: ?string,
+  currentPhase: Phase,
+  instructor?: ?string,
+  template: string,
 };/* @flow */
 /* eslint-disable */
 // This file was automatically generated and should not be edited.

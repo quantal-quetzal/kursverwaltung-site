@@ -3,69 +3,30 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: NewTemplate
+// GraphQL query operation: GetAllInstructors
 // ====================================================
 
-export type NewTemplate_createTemplate_prerequisites_data = {
-  __typename: "Prerequisite",
+export type GetAllInstructors_allInstructors_data = {
+  __typename: "Instructor",
   /**
    * The document's ID.
    */
   _id: string,
-  name: string,
-  description: ?string,
-  requiresDocumentScan: boolean,
+  firstName: ?string,
+  lastName: ?string,
+  registrationNumber: ?string,
 };
 
-export type NewTemplate_createTemplate_prerequisites = {
-  __typename: "PrerequisitePage",
+export type GetAllInstructors_allInstructors = {
+  __typename: "InstructorPage",
   /**
-   * The elements of type 'Prerequisite' in this page.
+   * The elements of type 'Instructor' in this page.
    */
-  data: Array<?NewTemplate_createTemplate_prerequisites_data>,
+  data: Array<?GetAllInstructors_allInstructors_data>,
 };
 
-export type NewTemplate_createTemplate_tests_data = {
-  __typename: "Test",
-  /**
-   * The document's ID.
-   */
-  _id: string,
-  name: string,
-  description: ?string,
-  requiresDocumentScan: boolean,
-};
-
-export type NewTemplate_createTemplate_tests = {
-  __typename: "TestPage",
-  /**
-   * The elements of type 'Test' in this page.
-   */
-  data: Array<?NewTemplate_createTemplate_tests_data>,
-};
-
-export type NewTemplate_createTemplate = {
-  __typename: "Template",
-  /**
-   * The document's ID.
-   */
-  _id: string,
-  name: string,
-  prerequisites: NewTemplate_createTemplate_prerequisites,
-  tests: NewTemplate_createTemplate_tests,
-};
-
-export type NewTemplate = {
-  /**
-   * Create a new document in the collection of 'Template'
-   */
-  createTemplate: NewTemplate_createTemplate
-};
-
-export type NewTemplateVariables = {
-  name: string,
-  prerequisites: Array<PrerequisiteInput>,
-  tests: Array<TestInput>,
+export type GetAllInstructors = {
+  allInstructors: GetAllInstructors_allInstructors
 };/* @flow */
 /* eslint-disable */
 // This file was automatically generated and should not be edited.

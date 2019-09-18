@@ -1,7 +1,5 @@
 // @flow
 import * as React from "react"
-import { Router } from "@reach/router"
-import Layout from "../Layout"
 import type { Template, Prerequisite, Test } from "../Types"
 import { Form, List, Input, Button, Checkbox, Icon } from "antd"
 
@@ -71,8 +69,8 @@ export default (props: Props) => {
     <div>
       <Form
         onSubmit={e => {
-          props.onSave && props.onSave(template)
           e.preventDefault()
+          props.onSave && props.onSave(template)
         }}
       >
         <h2>Vorlage</h2>

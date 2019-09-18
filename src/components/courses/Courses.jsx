@@ -1,10 +1,10 @@
 // @flow
 import * as React from "react"
 import { Router } from "@reach/router"
-import Layout from "../components/Layout"
-import Courses from "../components/Courses"
+import Layout from "../Layout"
+import Courses from "./Courses"
 import { gql } from "apollo-boost"
-import apolloClient from "../components/ApolloClient"
+import apolloClient from "../ApolloClient"
 import { useQuery } from "@apollo/react-hooks"
 import { message, Modal, Spin, Card, Icon } from "antd"
 import { Link } from "gatsby"

@@ -33,3 +33,17 @@ export type Template = {
   prerequisites: Prerequisite[],
   tests: Test[],
 }
+
+export type Phase = "FINISHED" | "LOCKED" | "OPEN" | "STARTED" | "UNPUBLISHED"
+
+export type Course = {
+  name: string,
+  description?: string,
+  start?: Date,
+  end?: Date,
+  city?: string,
+  currentPhase: Phase,
+  instructorId?: string,
+  templateId?: string,
+  participantId?: string[],
+}

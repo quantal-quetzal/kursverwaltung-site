@@ -25,6 +25,10 @@ type Course {
   _ts: Long!
 }
 
+input CourseFilter {
+  currentPhase: Phase
+}
+
 # 'Course' input values
 input CourseInput {
   name: String!
@@ -339,8 +343,10 @@ input ParticipantTestResultsRelation {
 }
 
 enum Phase {
+  UNPUBLISHED
   OPEN
   STARTED
+  LOCKED
   FINISHED
 }
 
@@ -464,16 +470,12 @@ type Query {
     # The 'Template' document's ID
     id: ID!
   ): Template
-  allCourses(filter: QueryFilter): [Course!]!
+  allFilteredCourses(filter: CourseFilter!): [Course!]!
   # Find a document from the collection of 'Test' by its id.
   findTestByID(
     # The 'Test' document's ID
     id: ID!
   ): Test
-}
-
-input QueryFilter {
-  currentPhase: Phase
 }
 
 type Template {

@@ -3,69 +3,45 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: NewTemplate
+// GraphQL query operation: GetCourse
 // ====================================================
 
-export type NewTemplate_createTemplate_prerequisites_data = {
-  __typename: "Prerequisite",
-  /**
-   * The document's ID.
-   */
-  _id: string,
-  name: string,
-  description: ?string,
-  requiresDocumentScan: boolean,
+export type GetCourse_findCourseByID_instructor = {
+  __typename: "Instructor",
+  firstName: ?string,
+  lastName: ?string,
 };
 
-export type NewTemplate_createTemplate_prerequisites = {
-  __typename: "PrerequisitePage",
-  /**
-   * The elements of type 'Prerequisite' in this page.
-   */
-  data: Array<?NewTemplate_createTemplate_prerequisites_data>,
-};
-
-export type NewTemplate_createTemplate_tests_data = {
-  __typename: "Test",
-  /**
-   * The document's ID.
-   */
-  _id: string,
-  name: string,
-  description: ?string,
-  requiresDocumentScan: boolean,
-};
-
-export type NewTemplate_createTemplate_tests = {
-  __typename: "TestPage",
-  /**
-   * The elements of type 'Test' in this page.
-   */
-  data: Array<?NewTemplate_createTemplate_tests_data>,
-};
-
-export type NewTemplate_createTemplate = {
+export type GetCourse_findCourseByID_template = {
   __typename: "Template",
+  name: string,
+};
+
+export type GetCourse_findCourseByID = {
+  __typename: "Course",
   /**
    * The document's ID.
    */
   _id: string,
   name: string,
-  prerequisites: NewTemplate_createTemplate_prerequisites,
-  tests: NewTemplate_createTemplate_tests,
+  description: ?string,
+  start: ?any,
+  end: ?any,
+  city: ?string,
+  currentPhase: Phase,
+  instructor: ?GetCourse_findCourseByID_instructor,
+  template: GetCourse_findCourseByID_template,
 };
 
-export type NewTemplate = {
+export type GetCourse = {
   /**
-   * Create a new document in the collection of 'Template'
+   * Find a document from the collection of 'Course' by its id.
    */
-  createTemplate: NewTemplate_createTemplate
+  findCourseByID: ?GetCourse_findCourseByID
 };
 
-export type NewTemplateVariables = {
-  name: string,
-  prerequisites: Array<PrerequisiteInput>,
-  tests: Array<TestInput>,
+export type GetCourseVariables = {
+  id: string
 };/* @flow */
 /* eslint-disable */
 // This file was automatically generated and should not be edited.

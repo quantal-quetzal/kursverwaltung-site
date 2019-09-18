@@ -3,69 +3,52 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: NewTemplate
+// GraphQL mutation operation: NewCourse
 // ====================================================
 
-export type NewTemplate_createTemplate_prerequisites_data = {
-  __typename: "Prerequisite",
-  /**
-   * The document's ID.
-   */
-  _id: string,
-  name: string,
-  description: ?string,
-  requiresDocumentScan: boolean,
+export type NewCourse_createCourse_instructor = {
+  __typename: "Instructor",
+  firstName: ?string,
+  lastName: ?string,
 };
 
-export type NewTemplate_createTemplate_prerequisites = {
-  __typename: "PrerequisitePage",
-  /**
-   * The elements of type 'Prerequisite' in this page.
-   */
-  data: Array<?NewTemplate_createTemplate_prerequisites_data>,
-};
-
-export type NewTemplate_createTemplate_tests_data = {
-  __typename: "Test",
-  /**
-   * The document's ID.
-   */
-  _id: string,
-  name: string,
-  description: ?string,
-  requiresDocumentScan: boolean,
-};
-
-export type NewTemplate_createTemplate_tests = {
-  __typename: "TestPage",
-  /**
-   * The elements of type 'Test' in this page.
-   */
-  data: Array<?NewTemplate_createTemplate_tests_data>,
-};
-
-export type NewTemplate_createTemplate = {
+export type NewCourse_createCourse_template = {
   __typename: "Template",
+  name: string,
+};
+
+export type NewCourse_createCourse = {
+  __typename: "Course",
   /**
    * The document's ID.
    */
   _id: string,
   name: string,
-  prerequisites: NewTemplate_createTemplate_prerequisites,
-  tests: NewTemplate_createTemplate_tests,
+  description: ?string,
+  start: ?any,
+  end: ?any,
+  city: ?string,
+  currentPhase: Phase,
+  instructor: ?NewCourse_createCourse_instructor,
+  template: NewCourse_createCourse_template,
 };
 
-export type NewTemplate = {
+export type NewCourse = {
   /**
-   * Create a new document in the collection of 'Template'
+   * Create a new document in the collection of 'Course'
    */
-  createTemplate: NewTemplate_createTemplate
+  createCourse: NewCourse_createCourse
 };
 
-export type NewTemplateVariables = {
+export type NewCourseVariables = {
   name: string,
-  prerequisites: Array<PrerequisiteInput>,
-  tests: Array<TestInput>,
+  description?: ?string,
+  start?: ?any,
+  end?: ?any,
+  city?: ?string,
+  currentPhase: Phase,
+  instructor?: ?string,
+  template: string,
 };/* @flow */
 /* eslint-disable */
 // This file was automatically generated and should not be edited.

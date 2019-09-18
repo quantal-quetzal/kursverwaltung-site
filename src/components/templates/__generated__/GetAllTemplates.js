@@ -3,10 +3,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: NewTemplate
+// GraphQL query operation: GetAllTemplates
 // ====================================================
 
-export type NewTemplate_createTemplate_prerequisites_data = {
+export type GetAllTemplates_allTemplates_data_prerequisites_data = {
   __typename: "Prerequisite",
   /**
    * The document's ID.
@@ -17,15 +17,15 @@ export type NewTemplate_createTemplate_prerequisites_data = {
   requiresDocumentScan: boolean,
 };
 
-export type NewTemplate_createTemplate_prerequisites = {
+export type GetAllTemplates_allTemplates_data_prerequisites = {
   __typename: "PrerequisitePage",
   /**
    * The elements of type 'Prerequisite' in this page.
    */
-  data: Array<?NewTemplate_createTemplate_prerequisites_data>,
+  data: Array<?GetAllTemplates_allTemplates_data_prerequisites_data>,
 };
 
-export type NewTemplate_createTemplate_tests_data = {
+export type GetAllTemplates_allTemplates_data_tests_data = {
   __typename: "Test",
   /**
    * The document's ID.
@@ -36,36 +36,35 @@ export type NewTemplate_createTemplate_tests_data = {
   requiresDocumentScan: boolean,
 };
 
-export type NewTemplate_createTemplate_tests = {
+export type GetAllTemplates_allTemplates_data_tests = {
   __typename: "TestPage",
   /**
    * The elements of type 'Test' in this page.
    */
-  data: Array<?NewTemplate_createTemplate_tests_data>,
+  data: Array<?GetAllTemplates_allTemplates_data_tests_data>,
 };
 
-export type NewTemplate_createTemplate = {
+export type GetAllTemplates_allTemplates_data = {
   __typename: "Template",
   /**
    * The document's ID.
    */
   _id: string,
   name: string,
-  prerequisites: NewTemplate_createTemplate_prerequisites,
-  tests: NewTemplate_createTemplate_tests,
+  prerequisites: GetAllTemplates_allTemplates_data_prerequisites,
+  tests: GetAllTemplates_allTemplates_data_tests,
 };
 
-export type NewTemplate = {
+export type GetAllTemplates_allTemplates = {
+  __typename: "TemplatePage",
   /**
-   * Create a new document in the collection of 'Template'
+   * The elements of type 'Template' in this page.
    */
-  createTemplate: NewTemplate_createTemplate
+  data: Array<?GetAllTemplates_allTemplates_data>,
 };
 
-export type NewTemplateVariables = {
-  name: string,
-  prerequisites: Array<PrerequisiteInput>,
-  tests: Array<TestInput>,
+export type GetAllTemplates = {
+  allTemplates: GetAllTemplates_allTemplates
 };/* @flow */
 /* eslint-disable */
 // This file was automatically generated and should not be edited.

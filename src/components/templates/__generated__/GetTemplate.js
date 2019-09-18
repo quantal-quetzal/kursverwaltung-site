@@ -3,10 +3,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: NewTemplate
+// GraphQL query operation: GetTemplate
 // ====================================================
 
-export type NewTemplate_createTemplate_prerequisites_data = {
+export type GetTemplate_findTemplateByID_prerequisites_data = {
   __typename: "Prerequisite",
   /**
    * The document's ID.
@@ -17,15 +17,15 @@ export type NewTemplate_createTemplate_prerequisites_data = {
   requiresDocumentScan: boolean,
 };
 
-export type NewTemplate_createTemplate_prerequisites = {
+export type GetTemplate_findTemplateByID_prerequisites = {
   __typename: "PrerequisitePage",
   /**
    * The elements of type 'Prerequisite' in this page.
    */
-  data: Array<?NewTemplate_createTemplate_prerequisites_data>,
+  data: Array<?GetTemplate_findTemplateByID_prerequisites_data>,
 };
 
-export type NewTemplate_createTemplate_tests_data = {
+export type GetTemplate_findTemplateByID_tests_data = {
   __typename: "Test",
   /**
    * The document's ID.
@@ -36,36 +36,34 @@ export type NewTemplate_createTemplate_tests_data = {
   requiresDocumentScan: boolean,
 };
 
-export type NewTemplate_createTemplate_tests = {
+export type GetTemplate_findTemplateByID_tests = {
   __typename: "TestPage",
   /**
    * The elements of type 'Test' in this page.
    */
-  data: Array<?NewTemplate_createTemplate_tests_data>,
+  data: Array<?GetTemplate_findTemplateByID_tests_data>,
 };
 
-export type NewTemplate_createTemplate = {
+export type GetTemplate_findTemplateByID = {
   __typename: "Template",
   /**
    * The document's ID.
    */
   _id: string,
   name: string,
-  prerequisites: NewTemplate_createTemplate_prerequisites,
-  tests: NewTemplate_createTemplate_tests,
+  prerequisites: GetTemplate_findTemplateByID_prerequisites,
+  tests: GetTemplate_findTemplateByID_tests,
 };
 
-export type NewTemplate = {
+export type GetTemplate = {
   /**
-   * Create a new document in the collection of 'Template'
+   * Find a document from the collection of 'Template' by its id.
    */
-  createTemplate: NewTemplate_createTemplate
+  findTemplateByID: ?GetTemplate_findTemplateByID
 };
 
-export type NewTemplateVariables = {
-  name: string,
-  prerequisites: Array<PrerequisiteInput>,
-  tests: Array<TestInput>,
+export type GetTemplateVariables = {
+  id: string
 };/* @flow */
 /* eslint-disable */
 // This file was automatically generated and should not be edited.

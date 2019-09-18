@@ -4,13 +4,14 @@ import TemplateForm from "./TemplateForm"
 import Layout from "../Layout"
 import type { Template } from "../Types"
 import { useQuery } from "@apollo/react-hooks"
-import apolloClient from "../ApolloClient"
+import { ApolloConsumer } from "react-apollo"
+import ApolloClient from "apollo-boost"
 import { message, Modal, Spin } from "antd"
-import { GET_PARTICIPANT } from "./Queries"
+import { GET_TEMPLATE } from "./TemplateQueries"
 import type {
-  GetParticipant,
-  GetParticipantVariables,
-} from "./__generated__/GetParticipant"
+  GetTemplate,
+  GetTemplateVariables,
+} from "./__generated__/GetTemplate"
 
 const renderWithLayout = (children: React.Node): React.Node => {
   return <Layout pageTitle="Kursvorlage">{children}</Layout>
@@ -18,21 +19,22 @@ const renderWithLayout = (children: React.Node): React.Node => {
 
 type Props = {
   id: string,
+  client: ApolloClient,
 }
 
 export default (props: Props) => {
   const [saving, setSaving] = React.useState(false)
 
-  const variables: GetParticipantVariables = {
+  const variables: GetTemplateVariables = {
     id: props.id,
   }
-  const { data, loading, error } = useQuery<
-    GetParticipant,
-    GetParticipantVariables
-  >(GET_PARTICIPANT, {
-    client: apolloClient,
-    variables: variables,
-  })
+  const { data, loading, error } = useQuery<GetTemplate, GetTemplateVariables>(
+    GET_TEMPLATE,
+    {
+      client: props.client,
+      variables: variables,
+    }
+  )
 
   if (error) {
     return renderWithLayout(
@@ -51,12 +53,16 @@ export default (props: Props) => {
     )
   }
 
-  console.log(data)
+  const templateData = (data: GetTemplate)
 
   const template: Template = {
     ...data.findTemplateByID,
-    prerequisites: data.findTemplateByID.prerequisites.data,
-    tests: data.findTemplateByID.tests.data,
+    prerequisites: templateData.findTemplateByID
+      ? templateData.findTemplateByID.prerequisites.data
+      : [],
+    tests: templateData.findTemplateByID
+      ? templateData.findTemplateByID.tests.data
+      : [],
   }
 
   return renderWithLayout(<TemplateForm readOnly={true} template={template} />)

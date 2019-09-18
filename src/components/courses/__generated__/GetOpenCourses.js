@@ -3,49 +3,38 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetParticipant
+// GraphQL query operation: GetOpenCourses
 // ====================================================
 
-export type GetParticipant_findTemplateByID_prerequisites_data = {
-  __typename: "Prerequisite",
-  _id: string,
-  name: string,
-  description: ?string,
-  requiresDocumentScan: boolean,
+export type GetOpenCourses_allFilteredCourses_instructor = {
+  __typename: "Instructor",
+  firstName: ?string,
+  lastName: ?string,
 };
 
-export type GetParticipant_findTemplateByID_prerequisites = {
-  __typename: "PrerequisitePage",
-  data: Array<?GetParticipant_findTemplateByID_prerequisites_data>,
-};
-
-export type GetParticipant_findTemplateByID_tests_data = {
-  __typename: "Test",
-  _id: string,
-  name: string,
-  description: ?string,
-  requiresDocumentScan: boolean,
-};
-
-export type GetParticipant_findTemplateByID_tests = {
-  __typename: "TestPage",
-  data: Array<?GetParticipant_findTemplateByID_tests_data>,
-};
-
-export type GetParticipant_findTemplateByID = {
+export type GetOpenCourses_allFilteredCourses_template = {
   __typename: "Template",
+  name: string,
+};
+
+export type GetOpenCourses_allFilteredCourses = {
+  __typename: "Course",
+  /**
+   * The document's ID.
+   */
   _id: string,
   name: string,
-  prerequisites: GetParticipant_findTemplateByID_prerequisites,
-  tests: GetParticipant_findTemplateByID_tests,
+  description: ?string,
+  start: ?any,
+  end: ?any,
+  city: ?string,
+  currentPhase: Phase,
+  instructor: ?GetOpenCourses_allFilteredCourses_instructor,
+  template: GetOpenCourses_allFilteredCourses_template,
 };
 
-export type GetParticipant = {
-  findTemplateByID: ?GetParticipant_findTemplateByID
-};
-
-export type GetParticipantVariables = {
-  id: string
+export type GetOpenCourses = {
+  allFilteredCourses: Array<GetOpenCourses_allFilteredCourses>
 };/* @flow */
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
@@ -54,35 +43,55 @@ export type GetParticipantVariables = {
 // START Enums and Input Objects
 //==============================================================
 
+/**
+ * 
+ */
+export type Phase = "FINISHED" | "LOCKED" | "OPEN" | "STARTED" | "UNPUBLISHED";
+
 export type PrerequisiteInput = {|
   template?: ?PrerequisiteTemplateRelation,
   name: string,
   description?: ?string,
   requiresDocumentScan: boolean,
 |};
+/**
+ *  'Prerequisite' input values
+ */
 
 export type PrerequisiteTemplateRelation = {|
   create?: ?TemplateInput,
   connect?: ?string,
 |};
+/**
+ *  Allow manipulating the relationship between the types 'Prerequisite' and 'Template' using the field 'Prerequisite.template'.
+ */
 
 export type TemplateInput = {|
   name: string,
   prerequisites?: ?TemplatePrerequisitesRelation,
   tests?: ?TemplateTestsRelation,
 |};
+/**
+ *  'Template' input values
+ */
 
 export type TemplatePrerequisitesRelation = {|
   create?: ?Array<?PrerequisiteInput>,
   connect?: ?Array<?string>,
   disconnect?: ?Array<?string>,
 |};
+/**
+ *  Allow manipulating the relationship between the types 'Template' and 'Prerequisite'.
+ */
 
 export type TemplateTestsRelation = {|
   create?: ?Array<?TestInput>,
   connect?: ?Array<?string>,
   disconnect?: ?Array<?string>,
 |};
+/**
+ *  Allow manipulating the relationship between the types 'Template' and 'Test'.
+ */
 
 export type TestInput = {|
   template?: ?TestTemplateRelation,
@@ -90,11 +99,17 @@ export type TestInput = {|
   description?: ?string,
   requiresDocumentScan: boolean,
 |};
+/**
+ *  'Test' input values
+ */
 
 export type TestTemplateRelation = {|
   create?: ?TemplateInput,
   connect?: ?string,
 |};
+/**
+ *  Allow manipulating the relationship between the types 'Test' and 'Template' using the field 'Test.template'.
+ */
 
 //==============================================================
 // END Enums and Input Objects
