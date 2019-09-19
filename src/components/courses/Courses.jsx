@@ -8,30 +8,14 @@ import apolloClient from "../ApolloClient"
 import { useQuery } from "@apollo/react-hooks"
 import { message, Modal, Spin, Card, Icon } from "antd"
 import { Link } from "gatsby"
+import { GET_OPEN_COURSES } from "./CourseQueries"
 
 const renderWithLayout = (children: React.Node): React.Node => {
   return <Layout pageTitle="Kurse">{children}</Layout>
 }
 
 export default () => {
-  const { data, loading, error } = useQuery(
-    gql`
-      query loadCourses {
-        findCourseByID(id: "243143659524981255") {
-          _id
-          name
-          start
-          instructor {
-            firstName
-            lastName
-          }
-        }
-      }
-    `,
-    {
-      client: apolloClient,
-    }
-  )
+  const { data, loading, error } = useQuery(GET_OPEN_COURSES)
 
   if (error) {
     return renderWithLayout(
